@@ -1,0 +1,82 @@
+(A) TITLE: CharLinkedList
+    By: Krystal Morales
+
+(B) Purpose: The purpose of this program is to implement a char linked list
+
+(C) Acknowledgements: I relied on stack overflow to understand how to reverse a string, as well as concatenate. I used ChatGPT to better undertand how to work with and implement a doubly linked list. I usedd the prerecorded lecture to set up my private  section of the interface. I also had HW1 pulled up while working on this assignment.
+
+(D) Provided files and short description:
+  * CharLinkedList.h
+    * This file is a class declaration, it contains the public functions for CharALinkedList as well as the private helper functions and data members
+  * CharLinkedList.cpp
+    * This file contains the definitions for the CharLinkedList class each function that was declared in CharLinkeedList.h is defined in this file
+  * unit_tests.cpp
+    * This file contains various test cases for each funtion that was defined in CharLinkedList.cpp and declared in CharLinkedList.h
+
+(E) Compile/Run:
+    * To compile my unit tests do so by running "make unit_tests" followed by "./unit_tests"
+    * To compile the timer_main do so by running "make timer" followed by "./timer"
+    
+(F) Data Structure Outline:
+   
+    * CharLinkedList is a doubly linked list. A doubly linked list is a data structure composed of nodes, each containing a data element and two pointers, one pointing to the next node and another pointing to the previous node. The CharLinkedList class maintains a reference to the front of the list and keeps track of the number of items in the list. 
+  
+    * Justification for using a doubly linked list:
+      * Doubly linked lists are efficient for inserting and deleting elements at both the beginning and end of the list. This makes them suitable for various operations like pushAtFront, pushAtBack, popFromFront, and popFromBack.
+      * Linked lists can grow or shrink dynamically as elements are added or removed, which is essential for a list data structure.
+      * Unlike arrays, linked lists do not have a fixed size, so they can accommodate a variable number of elements without the need for resizing.
+      * Operations like getting the first element and checking if the list is empty can be performed in constant time.
+   
+    * Adantages of using a doubly linked list:
+      * Linked lists can grow or shrink dynamically
+      * Inserting or deleting elements at the front or back of a linked list is efficient 
+      * Linked lists use memory efficiently since they allocate memory only for the elements actually in the list
+    
+    * Disadvanages of using a doubly linked list:
+      * Accessing elements by index in a linked list is not efficient, unlike arrays where random access is time efficient. This limitation can impact performance when you need to access elements by their index frequently.
+      * Each element in a linked list has additional pointers to the next and previous elements, which can consume more memory compared to a contiguous array.
+      * Traversing a linked list requires iterating through the elements one by one, which can be slower than iterating over an array.
+
+(G) For each function that I wrote code for I then proceeded to write unit tests. I tested as many cases as I could think of, mostly testing possitive and negative cases. When testing InsertAt() I looked over the unit tests we were given as examples for hw1 and changed them to test my CharLinkedList::InserAt() function. I also throughly tested my concatenate function, particulalry because during hw1 I was unable to concatenate a nonempty list with itself, this is the function I spent the most time testing, and I think I was successful in being able to concatenate a nonempty list with itself. ReverseString() also required a lot of time to test and debug, this is because I kept printing the reversed string outside of the "[<<>>]" requirement. Ddue to how I was implementing functions, I couldn't always use assert statements so in the beginning I was testing my code with cout statements. 
+
+(H) Time Spent: 10 hours
+
+(I) Time measurement:
+1. There are three categories of operations listed (insertion, removal, and access). Within each
+category, list the times each operation took and rank the operations from fastest to slowest.
+    INSERTION OPERATION                                 Time (nanoseconds)
+    pushAtFront 100 times                               3176    
+    insertAt middle of list 100 times                   2362329            
+    pushAtBack 100 times                                5076457           
+    
+    REMOVAL OPERATION                                   Time (nanoseconds)
+    popFromFront 100 times                              3168              
+    removeAt middle of list 100 times                   2347794           
+    popFromBack 100 times                               5384496           
+
+    ACCESS OPERATION                                    Time (nanoseconds)
+    call first() 100 times                              425               
+    call last() 100 times                               5457517          
+    call elementAt() for middle of list 100 times       6977171   
+
+2. Discuss these rankings. Why were certain operations so much faster or slower than others?
+What are the features of linked lists that cause these disparities?
+    Insertion, removal, and access at the front were the fastest in all three operations because we have immediate access to the front of the list through the front pointer. Accessing the end of the list was the slowest during insertion and removal because we hadd to traverse the entire list to get to the end of the list. Accessing elementAt() was the slowest because either of how I implemented the function or due to having to calculate the index and then traverse the list to that index. 
+
+3. Now compare these measurements with the measurements you took for HW1. Which operations are faster when using array lists? Which are faster using linked lists? Why?
+    Compared to hw1, with linked lists it take more time to access the last element in a linke list due to having to traverse the entire list, and accessing the front of the list is much more efficient with linked lists than with array lists. In both array list and linked list, middle elements took about the same time.
+
+QUESTIONS:
+• Q1: Which functions in the interface were easier to implement for linked lists compared to array
+lists? Why?
+    pushAtFront() was easier to implement for linked lists because we insert the new noe andd then rejust the next an prev pointers
+
+• Q2: Which functions in the interface were harder to implement for linked lists compared to array
+lists? Why?
+    pushAtBack was more complicated in the linked list because we had to traverse the entire list and reassign the next and prev pointers.
+    elementAt() was easier to implement in the array list because we just had to return data[index], while in the linked list we had to implement a recurrsive function to find the element at the specified index.
+    inserAt() was harder to implement in the linked list because we had to take into account various scenarios (front, middle, end) and correctly point the next and prev pointers
+
+• Q3: If a client had an existing program that uses CharArrayLists, what changes would they have
+to make to their code to switch to CharLinkedLists?
+    Their private data members would have to change we no longer need to keep up with capacity and we dont need an expand function. We would need to implement constructors in the private section of the class, an add pointers (front, next, tail, prev). Then we woul adjust the .cpp file accordingly. 
